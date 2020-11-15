@@ -386,6 +386,11 @@
       "packageName": "@shared/components",
       "projectFolder": "packages/libs/components",
       "shouldPublish": false
+    },
+    {
+      "packageName": "backend-for-frontend",
+      "projectFolder": "packages/apps/backend-for-frontend",
+      "shouldPublish": false
     }
 
     // {
