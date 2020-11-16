@@ -31,33 +31,33 @@
 ## Installation
 
 ```bash
-$ npm install
+$ rush update
 ```
 
 ## Running the app
 
 ```bash
 # development
-$ npm run start
+$ rushx start
 
 # watch mode
-$ npm run start:dev
+$ rushx start:dev
 
 # production mode
-$ npm run start:prod
+$ rushx start:prod
 ```
 
 ## Test
 
 ```bash
 # unit tests
-$ npm run test
+$ rushx test
 
 # e2e tests
-$ npm run test:e2e
+$ rushx test:e2e
 
 # test coverage
-$ npm run test:cov
+$ rushx test:cov
 ```
 
 ## Support
