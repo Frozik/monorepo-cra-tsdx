@@ -1,6 +1,8 @@
-import { Controller, Get, Req, Res, Response, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { Request } from 'express';
 
+import { User } from './contracts';
+import { GoogleAuthGuard } from './google-auth.guard';
 import { SessionService } from './session.service';
 
 @Controller('auth')
@@ -8,25 +10,14 @@ export class AuthController {
   constructor(private sessionService: SessionService) {}
 
   @Get('google')
-  @UseGuards(AuthGuard('google'))
-  async googleAuth() {
-  }
-
-  @Get('google/callback')
-  @UseGuards(AuthGuard('google'))
-  async googleAuthRedirect(@Req() request, @Res() response: Response) {
-    if (!request?.user) {
+  @UseGuards(GoogleAuthGuard)
+  async googleAuthRedirect(@Req() request: Request) {
+    if (!request.user) {
       return;
     }
 
-    const refreshToken = await this.sessionService.createSession(request.user);
-    const accessToken = await this.sessionService.getAccessToken(request.user);
+    const accessToken = await this.sessionService.getAccessToken(request.user as User);
 
-    response.headers.append(
-      'Set-Cookie',
-      await this.sessionService.createRefreshTokenCookie(refreshToken)
-    );
-
-    return { accessToken };
+    return { accessToken, user: request.user };
   }
 }

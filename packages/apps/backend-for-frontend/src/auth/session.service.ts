@@ -30,10 +30,6 @@ export class SessionService {
     return refreshToken;
   }
 
-  async createRefreshTokenCookie(refreshToken: RefreshToken): Promise<string> {
-    return `RefreshToken=${refreshToken}; Expires=${new Date(Date.now() + 60 * 60 * 1000).toUTCString()}; Secure; HttpOnly`
-  }
-
   async hasSession(refreshToken: RefreshToken): Promise<boolean> {
     return !!(await this.sessionStorageService.getSession(refreshToken));
   }
