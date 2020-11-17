@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { EnvironmentVariables } from 'src/configuration';
 
-import { AccessToken, RefreshToken, RefreshTokenPayload, User } from './contracts';
+import { EnvironmentVariables } from '../configuration';
+import { AccessToken, RefreshToken, RefreshTokenPayload, TokenType, User } from './contracts';
 import { UserStorageService } from './user-storage.service';
 
 @Injectable()
@@ -25,7 +25,10 @@ export class AuthService {
   }
 
   async buildRefreshToken(user: User): Promise<RefreshToken> {
-    const payload: RefreshTokenPayload = { userId: user.userId };
+    const payload: RefreshTokenPayload = {
+      type: TokenType.RefreshToken,
+      userId: user.userId
+    };
 
     return this.jwtService.sign(payload, {
       secret: this.authCookieSecret,

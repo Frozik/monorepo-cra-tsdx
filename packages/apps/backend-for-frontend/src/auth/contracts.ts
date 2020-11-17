@@ -26,6 +26,11 @@ export interface User {
   groups: UserGroups[];
 }
 
+export enum TokenType {
+  RefreshToken = 'RefreshToken',
+}
+
 export interface RefreshTokenPayload {
+  type: TokenType.RefreshToken;
   userId: UserId;
 }

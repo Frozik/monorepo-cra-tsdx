@@ -5,7 +5,7 @@ import { Strategy } from 'passport-jwt';
 import { Request } from 'express';
 
 import { EnvironmentVariables } from '../configuration';
-import { RefreshToken, RefreshTokenPayload, User } from './contracts';
+import { RefreshToken, RefreshTokenPayload, TokenType } from './contracts';
 import { UserStorageService } from './user-storage.service';
 
 @Injectable()
@@ -32,7 +32,7 @@ export class JwtCookieStrategy extends PassportStrategy(Strategy, 'jwt-cookie') 
   async validate(payload: RefreshTokenPayload) {
     console.log(payload);
 
-    if (!payload || !payload.userId) {
+    if (!payload || !payload.userId || payload.type !== TokenType.RefreshToken) {
       throw new UnauthorizedException('User not found');
     }
 
