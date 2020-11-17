@@ -3,11 +3,12 @@ import { Request } from 'express';
 
 import { User } from './contracts';
 import { GoogleAuthGuard } from './google-auth.guard';
-import { SessionService } from './session.service';
+import { AuthService } from './auth.service';
+import { JwtCookieAuthGuard } from './jwt-cookie-auth.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private sessionService: SessionService) {}
+  constructor(private authService: AuthService) {}
 
   @Get('google')
   @UseGuards(GoogleAuthGuard)
@@ -16,8 +17,21 @@ export class AuthController {
       return;
     }
 
-    const accessToken = await this.sessionService.getAccessToken(request.user as User);
+    const accessToken = await this.authService.buildAccessToken(request.user as User);
 
     return { accessToken, user: request.user };
   }
+
+  @Get('refresh')
+  @UseGuards(JwtCookieAuthGuard)
+  async refresh(@Req() request: Request) {
+    if (!request.user) {
+      return;
+    }
+
+    const accessToken = await this.authService.buildAccessToken(request.user as User);
+
+    return { accessToken, user: request.user };
+  }
+
 }

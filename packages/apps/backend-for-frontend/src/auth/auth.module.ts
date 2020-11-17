@@ -5,13 +5,13 @@ import { PassportModule } from '@nestjs/passport';
 
 import { EnvironmentVariables } from '../configuration';
 import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
 import { GoogleAuthGuard } from './google-auth.guard';
 import { GoogleStrategy } from './google.strategy';
+import { JwtCookieAuthGuard } from './jwt-cookie-auth.guard';
+import { JwtCookieStrategy } from './jwt-cookie.strategy';
 import { JwtStrategy } from './jwt.strategy';
-import { MemorySessionStorageService } from './memory-session-storage.service';
 import { MemoryUserStorageService } from './memory-user-storage.service';
-import { SessionStorageService } from './session-storage.service';
-import { SessionService } from './session.service';
 import { UserStorageService } from './user-storage.service';
 
 @Module({
@@ -19,7 +19,7 @@ import { UserStorageService } from './user-storage.service';
     PassportModule,
     JwtModule.registerAsync({
       useFactory: async (configService: ConfigService<EnvironmentVariables>) => ({
-        secretOrPrivateKey: configService.get<string>('JWT_TOKEN_SECRET'),
+        secret: configService.get<string>('JWT_TOKEN_SECRET'),
         signOptions: {
             expiresIn: configService.get<string>('JWT_TOKEN_LIFETIME'),
         },
@@ -30,13 +30,11 @@ import { UserStorageService } from './user-storage.service';
   controllers: [AuthController],
   providers: [
     GoogleAuthGuard,
+    JwtCookieAuthGuard,
     GoogleStrategy,
     JwtStrategy,
-    SessionService,
-    {
-      provide: SessionStorageService,
-      useClass: MemorySessionStorageService
-    },
+    JwtCookieStrategy,
+    AuthService,
     {
       provide: UserStorageService,
       useClass: MemoryUserStorageService

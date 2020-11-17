@@ -5,7 +5,7 @@ import { Request, Response } from 'express';
 import { EnvironmentVariables } from 'src/configuration';
 
 import { User } from './contracts';
-import { SessionService } from './session.service';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class GoogleAuthGuard extends AuthGuard('google') {
@@ -13,28 +13,32 @@ export class GoogleAuthGuard extends AuthGuard('google') {
   private readonly authCookieLifetime: number;
 
   constructor(
-    private sessionService: SessionService,
+    private authService: AuthService,
     configService: ConfigService<EnvironmentVariables>
   ) {
     super();
 
     this.authCookieName = configService.get<string>('AUTH_COOKIE_NAME');
-    this.authCookieLifetime = parseInt(configService.get<string>('AUTH_COOKIE_LIFETIME'), 10);
+    this.authCookieLifetime = parseInt(configService.get<string>('AUTH_COOKIE_LIFETIME_SECONDS'), 10) * 1000;
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const canActivate = await super.canActivate(context) as boolean;
 
+    if (!canActivate) {
+      return false;
+    }
+
     const request = context.switchToHttp().getRequest() as Request;
     const user = request.user as User;
 
     if (!user) {
-      return canActivate;
+      return false;
     }
 
     const response = context.switchToHttp().getResponse() as Response;
 
-    const refreshToken = await this.sessionService.createSession(request.user as User);
+    const refreshToken = await this.authService.buildRefreshToken(user);
 
     response.cookie(
       this.authCookieName,
@@ -46,6 +50,6 @@ export class GoogleAuthGuard extends AuthGuard('google') {
       }
     );
 
-    return canActivate;
+    return true;
   }
 }

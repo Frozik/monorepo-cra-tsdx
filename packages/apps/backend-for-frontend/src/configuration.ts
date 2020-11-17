@@ -3,7 +3,8 @@ export interface EnvironmentVariables {
   JWT_TOKEN_LIFETIME: string;
 
   AUTH_COOKIE_NAME: string;
-  AUTH_COOKIE_LIFETIME: string;
+  AUTH_COOKIE_LIFETIME_SECONDS: string;
+  AUTH_TOKEN_SECRET: string;
 
   GOOGLE_CLIENT_ID: string;
   GOOGLE_CLIENT_SECRET: string;

@@ -30,6 +30,7 @@ dependencies:
   '@typescript-eslint/experimental-utils': 4.6.1_eslint@7.13.0+typescript@4.0.5
   '@typescript-eslint/parser': 4.6.1_eslint@7.13.0+typescript@4.0.5
   classnames: 2.2.6
+  cookie-parser: 1.4.5
   eslint: 7.13.0
   eslint-config-prettier: 6.15.0_eslint@7.13.0
   eslint-plugin-prettier: 3.1.4_eslint@7.13.0+prettier@2.1.2
@@ -4757,6 +4758,15 @@ packages:
     dev: false
     resolution:
       integrity: sha512-4FJkXzKXEDB1snCFZlLP4gpC3JILicCpGbzG9f9G7tGqGCzETQ2hWPrcinA9oU4wtf2biUaEH5065UnMeR33oA==
+  /cookie-parser/1.4.5:
+    dependencies:
+      cookie: 0.4.0
+      cookie-signature: 1.0.6
+    dev: false
+    engines:
+      node: '>= 0.8.0'
+    resolution:
+      integrity: sha512-f13bPUj/gG/5mDr+xLmSxxDsB9DQiTIfhJS/sqjrmfAWiAN+x2O4i/XguTL9yDZ+/IFDanJ+5x7hC4CXT9Tdzw==
   /cookie-signature/1.0.6:
     dev: false
     resolution:
@@ -15840,6 +15850,7 @@ packages:
       '@types/supertest': 2.0.10
       '@typescript-eslint/eslint-plugin': 4.6.1_22ab60e69a1f15a0eb2ba800dd6aa124
       '@typescript-eslint/parser': 4.6.1_eslint@7.13.0+typescript@4.0.5
+      cookie-parser: 1.4.5
       eslint: 7.13.0
       eslint-config-prettier: 6.15.0_eslint@7.13.0
       eslint-plugin-prettier: 3.1.4_eslint@7.13.0+prettier@2.1.2
@@ -15864,7 +15875,7 @@ packages:
     dev: false
     name: '@rush-temp/backend-for-frontend'
     resolution:
-      integrity: sha512-HdtUyKSCzNeUAIl3Bhkzdkhzwp1EgjOqfaIwEFXb2yekKPRBfTbS1+pAJNecuHly/hc7r527gfFaBtb1yKmpug==
+      integrity: sha512-lh0B78dA78xfvLxDq7aljuC9PJPC6c6CFwYQu5JgfeIjemHZqhKfPZkwVCthoXDjCWydVpZMLOrV+kFYMU7rDA==
       tarball: 'file:projects/backend-for-frontend.tgz'
     version: 0.0.0
   'file:projects/components.tgz_@types+node@14.14.6':
@@ -15965,6 +15976,7 @@ specifiers:
   '@typescript-eslint/experimental-utils': ^4.6.1
   '@typescript-eslint/parser': ^4.6.1
   classnames: ^2.2.6
+  cookie-parser: ~1.4.5
   eslint: ^7.12.1
   eslint-config-prettier: ^6.15.0
   eslint-plugin-prettier: ^3.1.4

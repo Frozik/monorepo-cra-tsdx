@@ -26,8 +26,6 @@ export interface User {
   groups: UserGroups[];
 }
 
-export interface Session {
-  user: User;
-
-  refreshToken: string;
+export interface RefreshTokenPayload {
+  userId: UserId;
 }
